@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Processing Quiz: Essentials for Researchers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Deep & Earthy -->
+    <!-- Application Structure Plan: The SPA presents a multiple-choice quiz. It features a header, a main quiz area displaying one question at a time, navigation buttons (previous/next), and a submit button. After submission, a results section appears, showing the score and offering a review. This structure is designed for straightforward user interaction and a clear learning path through the questions. -->
+    <!-- Visualization & Content Choices: Not applicable for a quiz. The content is textual questions and multiple-choice answers. Interaction is button clicks for navigation, answer selection, and submission. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: #F8F7F4; /* Off-white */
+            color: #4A4A4A; /* Dark Grey Text */
+        }
+        h1, h2, h3, .font-lora {
+            font-family: 'Lora', serif;
+            color: #4A2E27; /* Deep Brown Headers */
+        }
+        .quiz-container {
+            background-color: #FFFFFF;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+        }
+        .answer-option {
+            background-color: #F8F7F4; /* Light background for options */
+            border: 1px solid #EAEAEA;
+            color: #4A4A4A;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+        .answer-option:hover {
+            background-color: #ECEBE9;
+            border-color: #A4846C; /* Muted Tan on hover */
+        }
+        .answer-option.selected {
+            background-color: #A4846C; /* Muted Tan for selected */
+            color: #FFFFFF;
+            border-color: #4A2E27;
+        }
+        .answer-option.correct-answer {
+            background-color: #4CAF50; /* Green for correct answer */
+            color: #FFFFFF;
+            border-color: #388E3C;
+        }
+        .answer-option.incorrect-answer {
+            background-color: #D32F2F; /* Red for incorrect answer */
+            color: #FFFFFF;
+            border-color: #B71C1C;
+        }
+        .btn-nav {
+            background-color: #4A2E27; /* Deep Brown */
+            color: #FFFFFF;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s ease;
+        }
+        .btn-nav:hover:not(:disabled) {
+            background-color: #A4846C; /* Muted Tan on hover */
+        }
+        .btn-nav:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .hint-text {
+            color: #B5651D; /* Sienna for hints */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white shadow-sm py-6">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold">Data Processing Quiz</h1>
+            <p class="text-lg text-gray-600 mt-1">Test your knowledge on research data processing essentials.</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 md:py-12">
+        <div id="quiz-area" class="quiz-container max-w-3xl mx-auto">
+            <div id="question-display" class="mb-8">
+                <h2 id="question-text" class="text-2xl font-lora font-semibold mb-4 text-[#4A2E27]"></h2>
+                <div id="answer-options" class="grid grid-cols-1 gap-4">
+                    <!-- Answer options will be loaded here by JS -->
+                </div>
+                <p id="hint-text" class="hint-text mt-4 text-sm italic"></p>
+            </div>
+
+            <div id="quiz-navigation" class="flex justify-between items-center mt-8">
+                <button id="prev-btn" class="btn-nav" disabled>Previous</button>
+                <span id="question-counter" class="text-lg font-semibold text-[#B5651D]">Question 1 of 10</span>
+                <button id="next-btn" class="btn-nav">Next</button>
+            </div>
+
+            <div id="submit-section" class="text-center mt-8">
+                <button id="submit-quiz-btn" class="btn-nav hidden">Submit Quiz</button>
+            </div>
+        </div>
+
+        <div id="results-area" class="quiz-container max-w-3xl mx-auto mt-12 hidden">
+            <h2 class="text-3xl font-lora font-bold text-center mb-6 text-[#4A2E27]">Quiz Results</h2>
+            <p id="score-text" class="text-xl text-center mb-6 text-gray-800"></p>
+            <div id="review-area" class="space-y-8">
+                <!-- Answer review will be loaded here by JS -->
+            </div>
+            <div class="text-center mt-8">
+                <button id="restart-quiz-btn" class="btn-nav">Restart Quiz</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-[#4A2E27] text-white py-8 text-center mt-8">
+        <p>&copy; 2025 Data Processing Quiz. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const quizData = {
+            "questions": [
+                {
+                    "questionType": 0,
+                    "question": "A research assistant is manually entering patient-reported outcome data from paper questionnaires into a digital spreadsheet. They notice a question asking for 'Age' where one entry is '150 years'. Which specific data editing check should immediately flag this entry?",
+                    "hint": "Think about verifying if a single numerical value falls within expected boundaries.",
+                    "answerOptions": [
+                        { "text": "Logical Consistency Check", "isCorrect": false, "rationale": "Logical consistency checks examine relationships between multiple variables, not the plausibility of a single value." },
+                        { "text": "Duplicate Detection", "isCorrect": false, "rationale": "Duplicate detection identifies redundant records, not implausible single data points." },
+                        { "text": "Range Check", "isCorrect": true, "rationale": "A range check specifically sets minimum and maximum expected values for a variable and flags entries outside this predefined range, such as an age of 150 years." },
+                        { "text": "Classification Check", "isCorrect": false, "rationale": "Classification checks ensure data is correctly categorized, not that individual values are within plausible limits." }
+                    ]
+                },
+                {
+                    "questionType": 0,
+                    "question": "After a large-scale health survey, all completed questionnaires are sent to a central office where a specialized team systematically reviews them for errors and omissions. This type of editing is primarily known as:",
+                    "hint": "Consider the location and timing of this type of data review relative to the collection phase.",
+                    "answerOptions": [
+                        { "text": "Field Editing", "isCorrect": false, "rationale": "Field editing is performed by the investigator immediately after data collection, often on-site, not centrally." },
+                        { "text": "Pre-coding", "isCorrect": false, "rationale": "Pre-coding involves assigning codes during questionnaire design, which facilitates later entry, but it is not a type of editing process itself." },
+                        { "text": "Central Editing", "isCorrect": true, "rationale": "Central editing occurs when all forms have been returned to a central office and are systematically reviewed, often by a dedicated team." },
+                        { "text": "Automated Validation", "isCorrect": false, "rationale": "Automated validation uses software; the question describes a team performing a systematic review, implying human oversight." }
+                    ]
+                },
+                {
+                    "questionType": 0,
+                    "question": "A qualitative researcher wants to analyze patient narratives about their chronic illness experience. They start by reading through the transcripts and identifying key phrases or concepts that repeatedly emerge from the patients' own words, then assigning a code based on those exact phrases. Which coding approach are they primarily using?",
+                    "hint": "The name of this approach suggests it comes 'from within' the data itself, using participants' direct expressions.",
+                    "answerOptions": [
+                        { "text": "Deductive Coding", "isCorrect": false, "rationale": "Deductive coding applies a pre-existing framework, not emergent themes from participants' exact words." },
+                        { "text": "Structural Coding", "isCorrect": false, "rationale": "Structural coding organizes data by its distinct structural elements or purpose, not by participant-generated language." },
+                        { "text": "Thematic Analysis Coding", "isCorrect": false, "rationale": "Thematic analysis focuses on overarching themes, but 'In Vivo' specifically uses the participants' own words as codes." },
+                        { "text": "In Vivo Coding", "isCorrect": true, "rationale": "In Vivo coding involves creating codes directly from key terms or phrases found within the textual data itself, preserving participants' original meanings." }
+                    ]
+                },
+                {
+                    "questionType": 0,
+                    "question": "Which of the following is a key benefit of using a codebook in qualitative research, as highlighted in the provided materials?",
+                    "hint": "Think about what a comprehensive list of all your codes and their definitions provides at a glance.",
+                    "answerOptions": [
+                        { "text": "It automates all aspects of qualitative data analysis, removing the need for researcher interpretation.", "isCorrect": false, "rationale": "While modern software aids coding, qualitative analysis still requires significant researcher interpretation; a codebook is a guide, not a full automation tool." },
+                        { "text": "It provides a quick overview, offering a snapshot understanding of the data and its analysis at any stage of the project.", "isCorrect": true, "rationale": "A codebook serves as a central reference that helps researchers and others quickly grasp the categories and themes present in the data, providing a snapshot understanding." },
+                        { "text": "It is primarily used for converting qualitative data into quantitative statistics, such as means and standard deviations.", "isCorrect": false, "rationale": "While coding can enable 'counting' of themes, a codebook's primary benefit is organizing qualitative data for systematic analysis, not direct statistical calculations like means or standard deviations." },
+                        { "text": "It is exclusively a manual tool and cannot be integrated with any qualitative data analysis software.", "isCorrect": false, "rationale": "Modern QDA software significantly facilitates codebook development and management, contradicting the idea that it's exclusively manual." }
+                    ]
+                },
+                {
+                    "questionType": 0,
+                    "question": "A hospital IT department is implementing a new system to ensure sensitive patient information (like names, addresses, and diagnoses) in clinical notes is automatically tagged for HIPAA compliance. Which data classification method is most appropriate for this task?",
+                    "hint": "This method involves the software looking directly at what's *inside* the data to make its determination.",
+                    "answerOptions": [
+                        { "text": "User-based Data Classification", "isCorrect": false, "rationale": "User-based classification is manual and prone to errors at scale; automated methods are preferred for compliance." },
+                        { "text": "Context-based Data Classification", "isCorrect": false, "rationale": "Context-based classification relies on location or creator, not the actual content of the data itself, which is needed for sensitive information detection." },
+                        { "text": "Content-based Data Classification", "isCorrect": true, "rationale": "Content-based classification uses software to inspect and interpret the actual data to identify sensitive information, making it ideal for automated compliance tagging." },
+                        { "text": "Longitudinal Data Classification", "isCorrect": false, "rationale": "Longitudinal classification relates to data that changes over time, not the classification of sensitive content within static records." }
+                    ]
+                },
+                {
+                    "questionType": 0,
+                    "question": "What is a significant potential negative consequence of *under-classifying* sensitive research data (e.g., classifying identifiable patient data as 'De-identified - Low Sensitivity')?",
+                    "hint": "Consider the purpose of classifying data by security level and what happens when those levels are ignored.",
+                    "answerOptions": [
+                        { "text": "The data might be stored inefficiently, leading to higher storage costs.", "isCorrect": false, "rationale": "While classification can impact storage, under-classification of sensitive data has far more critical implications than just cost or efficiency." },
+                        { "text": "It could lead to unauthorized access or disclosure of protected information, resulting in severe privacy breaches and legal penalties.", "isCorrect": true, "rationale": "Under-classifying sensitive data means insufficient security controls are applied, making it vulnerable to breaches, which can have severe ethical, legal, and reputational consequences." },
+                        { "text": "The data would be impossible to analyze using statistical software.", "isCorrect": false, "rationale": "Classification affects access and security, not compatibility with analysis tools." },
+                        { "text": "Researchers would be unable to share the data with any collaborators.", "isCorrect": false, "rationale": "Over-classification might restrict sharing, but under-classification would permit sharing when it shouldn't, leading to breaches." }
+                    ]
+                },
+                {
+                    "questionType": 0,
+                    "question": "A researcher is preparing to present their findings on patient recovery rates across different surgical procedures. They organize the data into a table with clear rows for procedures and columns for recovery metrics (e.g., 'Avg. Recovery Days', 'Complication Rate'). What primary merit of tabular presentation is best demonstrated here?",
+                    "hint": "Think about how side-by-side information helps in understanding differences and similarities.",
+                    "answerOptions": [
+                        { "text": "Brief and Simple Presentation", "isCorrect": false, "rationale": "While tables can be brief and simple, the specific arrangement for direct comparison is a more precise merit in this context." },
+                        { "text": "Condensed Information", "isCorrect": false, "rationale": "Tables do condense information, but this option doesn't capture the specific benefit for comparison as effectively." },
+                        { "text": "Facilitates Comparison", "isCorrect": true, "rationale": "By placing different surgical procedures and their respective recovery metrics in proximity within rows and columns, the table makes direct comparison of outcomes between procedures straightforward." },
+                        { "text": "Simple Analysis", "isCorrect": false, "rationale": "Tables facilitate analysis, but the primary merit described by the side-by-side arrangement is comparison." }
+                    ]
+                },
+                {
+                    "questionType": 0,
+                    "question": "Which of the following is considered a mandatory component of a 'good table' to ensure its clarity and proper academic referencing?",
+                    "hint": "How do you typically refer to a specific table in a research paper, and what's at the very top of it?",
+                    "answerOptions": [
+                        { "text": "Dynamic filters for user interaction.", "isCorrect": false, "rationale": "Dynamic filters are for interactive web presentations, not a mandatory component of a static academic table." },
+                        { "text": "A list of all raw data points used to create the table.", "isCorrect": false, "rationale": "A good table summarizes data, it does not typically include all raw data points within the table body itself." },
+                        { "text": "A unique Table Number and a comprehensive Title.", "isCorrect": true, "rationale": "A unique table number allows for easy cross-referencing within a document, and a comprehensive title accurately describes the table's content, both critical for clarity and academic rigor." },
+                        { "text": "Complex statistical tests displayed directly within the table cells.", "isCorrect": false, "rationale": "While tables can present statistical results, the complex tests themselves are typically described in the methodology or results sections, not as a core component of the table structure." }
+                    ]
+                },
+                {
+                    "questionType": 0,
+                    "question": "A research project continuously collects real-time sensor data from wearable health devices. Over a year, the type of sensors used changes due to new technology. This causes a shift in the data's format and granularity, leading to the older data becoming less comparable with newer data. This scenario is a prime example of which data quality challenge?",
+                    "hint": "Think about how data's 'relevance' or 'characteristics' can change over an extended period.",
+                    "answerOptions": [
+                        { "text": "Duplicated Data", "isCorrect": false, "rationale": "Duplicated data refers to redundant entries, not changes in data characteristics over time." },
+                        { "text": "Human Errors", "isCorrect": false, "rationale": "This problem is systemic, related to evolving technology and data characteristics, not primarily manual errors." },
+                        { "text": "Missing Data", "isCorrect": false, "rationale": "Missing data refers to gaps. While gaps might occur, the core problem described is a change in the nature of the data itself over time." },
+                        { "text": "Data Drift", "isCorrect": true, "rationale": "Data drift occurs when the statistical properties of the target variable or the relationships between variables change over time, often due to changes in data collection methods or underlying processes, making older data less relevant or comparable." }
+                    ]
+                },
+                {
+                    "questionType": 0,
+                    "question": "Which of the following best describes a proactive best practice for maintaining data reliability and quality in a research project, rather than a reactive one?",
+                    "hint": "Consider actions taken *before* or *during* data collection and early processing to prevent errors, rather than fixing them much later.",
+                    "answerOptions": [
+                        { "text": "Relying solely on post-analysis error detection by reviewing final reports.", "isCorrect": false, "rationale": "This is a reactive approach; problems are only identified after analysis is complete, making corrections costly and time-consuming." },
+                        { "text": "Implementing automated data validation techniques at the point of data entry and establishing clear data governance policies before collection begins.", "isCorrect": true, "rationale": "Automated validation and clear governance policies are preventative measures, designed to catch errors early or prevent them from occurring in the first place, aligning with a proactive approach." },
+                        { "text": "Conducting manual data cleaning only when anomalies are visibly extreme.", "isCorrect": false, "rationale": "This is a reactive and potentially insufficient approach; it waits for problems to become severe before addressing them, and manual cleaning alone is not comprehensive." },
+                        { "text": "Exclusively using no-code tools, assuming they inherently prevent all data quality issues.", "isCorrect": false, "rationale": "While no-code tools can aid data quality, relying on them exclusively without underlying governance or validation processes is a misconception and not a complete proactive strategy." }
+                    ]
+                }
+            ]
+        };
+
+        let currentQuestionIndex = 0;
+        let userAnswers = new Array(quizData.questions.length).fill(null); // Stores index of selected answer for each question
+
+        const questionTextElement = document.getElementById('question-text');
+        const answerOptionsElement = document.getElementById('answer-options');
+        const hintTextElement = document.getElementById('hint-text');
+        const questionCounterElement = document.getElementById('question-counter');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitQuizBtn = document.getElementById('submit-quiz-btn');
+        const quizArea = document.getElementById('quiz-area');
+        const resultsArea = document.getElementById('results-area');
+        const scoreTextElement = document.getElementById('score-text');
+        const reviewArea = document.getElementById('review-area');
+        const restartQuizBtn = document.getElementById('restart-quiz-btn');
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function loadQuestion() {
+            const question = quizData.questions[currentQuestionIndex];
+            questionTextElement.textContent = question.question;
+            hintTextElement.textContent = `Hint: ${question.hint}`;
+            answerOptionsElement.innerHTML = ''; // Clear previous options
+
+            // Shuffle answer options for display
+            const shuffledOptions = [...question.answerOptions];
+            shuffleArray(shuffledOptions);
+
+            shuffledOptions.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.textContent = option.text;
+                button.classList.add('answer-option', 'focus:outline-none', 'focus:ring-2', 'focus:ring-[#A4846C]');
+                button.onclick = () => selectAnswer(index); // Store the original index
+                answerOptionsElement.appendChild(button);
+
+                // Re-apply selected state if already answered
+                if (userAnswers[currentQuestionIndex] !== null && shuffledOptions[userAnswers[currentQuestionIndex]].text === option.text) {
+                    button.classList.add('selected');
+                }
+            });
+
+            updateNavigationButtons();
+            updateQuestionCounter();
+        }
+
+        function selectAnswer(selectedIndex) {
+            const currentQuestion = quizData.questions[currentQuestionIndex];
+            const answerButtons = answerOptionsElement.querySelectorAll('.answer-option');
+
+            // Find the original index of the selected shuffled option
+            let originalSelectedIndex = -1;
+            const shuffledOptions = [...currentQuestion.answerOptions]; // Need to re-shuffle to match current display order
+            shuffleArray(shuffledOptions); // This will not re-shuffle in the same way as loadQuestion, need to find a better way to map.
+
+            // More robust way to find original index:
+            let selectedOptionText = answerButtons[selectedIndex].textContent;
+            originalSelectedIndex = currentQuestion.answerOptions.findIndex(opt => opt.text === selectedOptionText);
+
+
+            userAnswers[currentQuestionIndex] = originalSelectedIndex; // Store the original index
+
+            answerButtons.forEach((button, index) => {
+                button.classList.remove('selected');
+                if (index === selectedIndex) {
+                    button.classList.add('selected');
+                }
+            });
+        }
+
+        function updateNavigationButtons() {
+            prevBtn.disabled = currentQuestionIndex === 0;
+            nextBtn.disabled = currentQuestionIndex === quizData.questions.length - 1;
+
+            if (currentQuestionIndex === quizData.questions.length - 1) {
+                submitQuizBtn.classList.remove('hidden');
+                nextBtn.classList.add('hidden');
+            } else {
+                submitQuizBtn.classList.add('hidden');
+                nextBtn.classList.remove('hidden');
+            }
+        }
+
+        function updateQuestionCounter() {
+            questionCounterElement.textContent = `Question ${currentQuestionIndex + 1} of ${quizData.questions.length}`;
+        }
+
+        function showResults() {
+            let correctCount = 0;
+            reviewArea.innerHTML = ''; // Clear previous review
+
+            quizData.questions.forEach((question, qIndex) => {
+                const userAnswerIndex = userAnswers[qIndex];
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('p-4', 'rounded-lg', 'mb-4');
+
+                const questionReviewText = document.createElement('p');
+                questionReviewText.classList.add('font-semibold', 'mb-2', 'text-[#4A2E27]');
+                questionReviewText.textContent = `Q${qIndex + 1}: ${question.question}`;
+                reviewItem.appendChild(questionReviewText);
+
+                question.answerOptions.forEach((option, oIndex) => {
+                    const optionReviewText = document.createElement('p');
+                    optionReviewText.textContent = option.text;
+                    optionReviewText.classList.add('ml-4', 'p-2', 'my-1', 'rounded-md', 'text-sm');
+
+                    if (option.isCorrect) {
+                        optionReviewText.classList.add('bg-green-100', 'text-green-800');
+                        if (userAnswerIndex === oIndex) {
+                            correctCount++;
+                        }
+                    }
+
+                    if (userAnswerIndex === oIndex && !option.isCorrect) {
+                        optionReviewText.classList.add('bg-red-100', 'text-red-800');
+                    }
+                    
+                    if (userAnswerIndex === oIndex || option.isCorrect) {
+                        const rationaleText = document.createElement('span');
+                        rationaleText.classList.add('italic', 'text-gray-600', 'ml-2');
+                        rationaleText.textContent = `(${option.rationale})`;
+                        optionReviewText.appendChild(rationaleText);
+                    }
+
+                    reviewItem.appendChild(optionReviewText);
+                });
+                reviewArea.appendChild(reviewItem);
+            });
+
+            scoreTextElement.textContent = `You scored ${correctCount} out of ${quizData.questions.length}!`;
+            quizArea.classList.add('hidden');
+            resultsArea.classList.remove('hidden');
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestionIndex < quizData.questions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            }
+        });
+
+        submitQuizBtn.addEventListener('click', showResults);
+
+        restartQuizBtn.addEventListener('click', () => {
+            currentQuestionIndex = 0;
+            userAnswers.fill(null);
+            quizArea.classList.remove('hidden');
+            resultsArea.classList.add('hidden');
+            loadQuestion();
+        });
+
+        // Initial load
+        loadQuestion();
+    </script>
+</body>
+</html>

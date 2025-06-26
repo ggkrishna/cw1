@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Journey of Data: From Collection to Insight</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F5; /* Light Grey/Off-White */
+            color: #333333; /* Dark Grey Text */
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Lora', serif;
+            color: #593D33; /* Deep Brown Headers */
+        }
+        .nav-link {
+            transition: color 0.3s;
+            color: #593D33;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover {
+            color: #333333; /* Dark Grey Hover */
+            border-bottom-color: #A0A8A4; /* Muted Green-Grey Hover */
+        }
+        .section-card {
+            background-color: #FFFFFF;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .flow-step {
+            border: 2px solid #593D33; /* Deep Brown Border */
+            background-color: #D4C9C3; /* Light Beige Background */
+            color: #593D33;
+        }
+        .flow-arrow {
+            color: #593D33; /* Deep Brown Arrow */
+        }
+        .icon-style {
+            color: #593D33;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 450px;
+        }
+        .tab-btn {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            border: none;
+            background-color: transparent;
+            border-bottom: 3px solid transparent;
+            font-weight: 600;
+            color: #A0A8A4; /* Muted Green-Grey for inactive tabs */
+            margin-bottom: -2px; /* Overlap the container's border */
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .tab-btn:hover {
+            color: #593D33;
+        }
+        .active-tab {
+            border-bottom-color: #593D33; /* Deep Brown */
+            color: #333333; /* Dark Grey Text */
+        }
+        .tab-content.hidden {
+            display: none;
+        }
+        .tabs-container {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none; /* For Firefox */
+            -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+        }
+        .tabs-container::-webkit-scrollbar {
+            display: none; /* For Chrome, Safari, and Opera */
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="text-center pt-16 pb-8 px-4">
+        <h1 class="text-4xl md:text-5xl font-bold mb-3">The Journey of Data</h1>
+        <p class="text-lg md:text-xl max-w-3xl mx-auto">From Raw Information to Actionable Insight: A Visual Guide to Data Collection & Processing</p>
+    </header>
+
+    <nav class="sticky top-0 bg-white/80 backdrop-blur-md shadow-sm z-10">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-center items-center h-16 space-x-4 md:space-x-8 text-sm md:text-base">
+                <a href="#sources" class="nav-link font-semibold">Sources</a>
+                <a href="#methods" class="nav-link font-semibold">Methods</a>
+                <a href="#sampling" class="nav-link font-semibold">Sampling</a>
+                <a href="#processing" class="nav-link font-semibold">Processing</a>
+                <a href="#quality" class="nav-link font-semibold">Quality</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="introduction" class="my-16">
+            <h2 class="text-3xl font-bold text-center mb-4">Unlocking Value: The Imperative of Data</h2>
+            <p class="text-lg text-center max-w-4xl mx-auto">In today's information-rich world, data is the new currency. However, raw data alone holds limited value. Its true power is unleashed only through systematic collection, meticulous processing, and intelligent analysis. This infographic guides you through the essential stages of the data journey, from diverse origins to refined insights, ensuring reliability and informing critical decisions across various fields.</p>
+        </section>
+
+        <section id="sources" class="my-16">
+            <h2 class="text-3xl font-bold text-center mb-4">1. Where Does Data Come From? Sources & Their Implications</h2>
+            <p class="text-center text-lg max-w-3xl mx-auto mb-10">All research begins with data. The source of this data—whether collected firsthand (primary) or gathered from existing resources (secondary)—is a foundational decision that profoundly shapes the entire research process, impacting relevance, cost, and control.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+                <div class="section-card h-full flex flex-col">
+                    <h3 class="font-bold text-xl mb-4">Primary Data: Tailored for Specificity</h3>
+                    <p class="mb-4 flex-grow">Primary data is original information gathered directly by the researcher specifically for the current research project (e.g., custom surveys, interviews, experiments). It offers high relevance and accuracy because the collection process is tailored and controlled. This provides the most precise answers to unique questions.</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Advantages:</strong> Highly relevant, current, full control over quality and methodology.</li>
+                        <li><strong>Disadvantages:</strong> Often costly, time-consuming, and limited in scope.</li>
+                    </ul>
+                </div>
+                <div class="section-card h-full flex flex-col">
+                    <h3 class="font-bold text-xl mb-4">Secondary Data: Leveraging Existing Information</h3>
+                    <p class="mb-4 flex-grow">Secondary data has already been collected and analyzed by others for a purpose distinct from the current research (e.g., government census data, academic journals, company reports). It is readily available, making it cost-effective and time-saving, ideal for broad trends or historical context.</p>
+                     <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Advantages:</strong> Cost-effective, time-saving, often covers larger datasets and broader timeframes.</li>
+                        <li><strong>Disadvantages:</strong> May lack specificity, limited control over original quality, can be outdated.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="methods" class="my-20">
+             <h2 class="text-3xl font-bold text-center mb-4">2. How Is Data Collected? Diverse Methodologies</h2>
+             <p class="text-center text-lg max-w-3xl mx-auto mb-10">Selecting the appropriate data collection method is paramount for gathering relevant and high-quality information. Each technique has distinct strengths and is suited for different research objectives and the type of data required (quantitative vs. qualitative).</p>
+            <div class="section-card">
+                <div class="chart-container h-[500px] max-h-[600px]">
+                    <canvas id="collectionMethodsChart"></canvas>
+                </div>
+            </div>
+             <p class="text-center text-sm mt-4">The chart above visually compares common data collection methods across key attributes. For example, while interviews and focus groups offer high "Depth of Insight" and rich qualitative data, they typically score lower on "Cost-Effectiveness" and "Speed" compared to large-scale surveys or archival research, which excel in breadth and efficiency.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+                <div class="section-card">
+                    <h3 class="text-xl">Surveys & Questionnaires</h3>
+                    <p class="mb-2">Used to gather standardized quantitative data from a large number of respondents via structured questions (online, mail, phone). Ideal for understanding general characteristics, opinions, or behaviors across a broad population efficiently.</p>
+                </div>
+                <div class="section-card">
+                    <h3 class="text-xl">Interviews (In-depth)</h3>
+                    <p class="mb-2">One-on-one conversations with open-ended questions to gain in-depth understanding and explore underlying reasons, perceptions, and personal experiences. Best for rich qualitative data from smaller, targeted samples.</p>
+                </div>
+                <div class="section-card">
+                    <h3 class="text-xl">Focus Groups</h3>
+                    <p class="mb-2">Facilitated group discussions (5-10 participants) to uncover diverse perspectives, explore attitudes, and understand group dynamics on a specific topic. Valuable for generating qualitative insights and observing social interactions.</p>
+                </div>
+                <div class="section-card">
+                    <h3 class="text-xl">Observation</h3>
+                    <p class="mb-2">Systematic watching and recording of behaviors, events, or interactions in natural or controlled settings. Useful for collecting non-verbal data and studying phenomena in real-time without direct intervention.</p>
+                </div>
+                <div class="section-card">
+                    <h3 class="text-xl">Experiments</h3>
+                    <p class="mb-2">A controlled method where researchers manipulate one or more independent variables to test causal relationships and measure their effects on dependent variables. Establishes cause-and-effect with high internal validity.</p>
+                </div>
+                <div class="section-card">
+                    <h3 class="text-xl">Archival Research & Document Analysis</h3>
+                    <p class="mb-2">Systematic review and interpretation of existing documents, records, and historical data (e.g., reports, articles, public databases). A non-reactive and cost-effective method for historical analysis or identifying patterns within pre-existing information.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="sampling" class="my-20">
+            <h2 class="text-3xl font-bold text-center mb-4">3. Who Do We Collect Data From? The Science of Sampling</h2>
+            <p class="text-center text-lg max-w-3xl mx-auto mb-10">Since studying an entire population is often impractical or impossible, researchers select a representative subset, or sample. The chosen sampling technique is crucial as it directly impacts the generalizability and reliability of the findings, determining how accurately conclusions drawn from the sample apply to the larger group.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+                 <div class="section-card h-full flex flex-col">
+                    <h3 class="font-bold text-xl mb-4">Probability Sampling: Precision & Generalizability</h3>
+                    <p class="mb-4">In probability sampling, every member of the population has a known, non-zero chance of being selected. This ensures that the sample is highly representative of the population and minimizes bias, allowing for robust statistical inference and reliable generalization of findings.</p>
+                    <div class="flex-grow">
+                        <ul class="list-disc list-inside space-y-1 mb-4">
+                            <li><strong>Advantages:</strong> Minimizes selection bias, allows for statistical inference, findings are highly generalizable to the population.</li>
+                            <li><strong>Disadvantages:</strong> More time-consuming and costly, often requires a complete list of the population (sampling frame) which may not be available.</li>
+                        </ul>
+                    </div>
+                    <p class="font-semibold mt-3">Key Types:</p>
+                    <ul class="list-disc list-inside space-y-1 mt-2">
+                        <li><strong>Simple Random:</strong> Every member has an equal chance.</li>
+                        <li><strong>Systematic:</strong> Selecting every Nth member from a list.</li>
+                        <li><strong>Stratified:</strong> Random sampling from pre-defined subgroups (strata).</li>
+                        <li><strong>Cluster:</strong> Randomly selecting entire groups (clusters).</li>
+                    </ul>
+                </div>
+                <div class="section-card h-full flex flex-col">
+                    <h3 class="font-bold text-xl mb-4">Non-Probability Sampling: Speed & Exploratory Insights</h3>
+                    <p class="mb-4">Non-probability sampling involves selecting participants based on convenience, judgment, or specific criteria, meaning not all members have an equal chance of selection. While faster and less expensive, it carries a higher risk of bias and its results are less generalizable to the broader population.</p>
+                     <div class="flex-grow">
+                        <ul class="list-disc list-inside space-y-1 mb-4">
+                           <li><strong>Advantages:</strong> Faster, less expensive, useful for exploratory research or when a sampling frame is unavailable.</li>
+                           <li><strong>Disadvantages:</strong> High risk of selection bias, results cannot be reliably generalized, difficult to estimate sampling error.</li>
+                        </ul>
+                    </div>
+                     <p class="font-semibold mt-3">Key Types:</p>
+                    <ul class="list-disc list-inside space-y-1 mt-2">
+                        <li><strong>Convenience:</strong> Participants are selected purely based on ease of access.</li>
+                        <li><strong>Purposive/Judgmental:</strong> Researchers hand-pick participants based on specific criteria.</li>
+                        <li><strong>Quota:</strong> Setting targets for subgroups, then using convenience to fill them.</li>
+                        <li><strong>Snowball:</strong> Participants recruit other suitable individuals from their network.</li>
+                    </ul>
+                </div>
+                 <div class="md:col-span-2 section-card">
+                     <div class="chart-container">
+                        <canvas id="samplingTechniquesChart"></canvas>
+                    </div>
+                    <p class="text-center text-sm mt-4">This bar chart highlights the inherent trade-offs between probability and non-probability sampling. Probability sampling offers high representativeness with a low risk of bias but is generally more resource-intensive (cost/time). Non-probability sampling reverses this, offering lower resource intensity but at the cost of higher bias risk and limited generalizability.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="processing" class="my-20">
+            <h2 class="text-3xl font-bold text-center mb-4">4. How Is Raw Data Made Useful? The Data Processing Cycle</h2>
+            <p class="text-center text-lg max-w-3xl mx-auto mb-12">Once collected, raw data is messy and often unusable. The data processing cycle is a systematic series of operations that transforms this raw data into clean, structured, and actionable information, ready for profound insights. Each stage is crucial, as errors at any point can compromise the final output's integrity.</p>
+            
+            <!-- Flexbox Flowchart for Better Responsiveness -->
+            <div class="flex flex-col md:flex-row items-center justify-between gap-y-2 md:gap-x-2 mb-12 max-w-6xl mx-auto">
+                <div class="flow-step rounded-lg p-3 text-center font-semibold w-full md:flex-1">1. Editing</div>
+                <div class="text-4xl transform rotate-90 md:rotate-0 flow-arrow">&rarr;</div>
+                <div class="flow-step rounded-lg p-3 text-center font-semibold w-full md:flex-1">2. Coding</div>
+                <div class="text-4xl transform rotate-90 md:rotate-0 flow-arrow">&rarr;</div>
+                <div class="flow-step rounded-lg p-3 text-center font-semibold w-full md:flex-1">3. Classification</div>
+                <div class="text-4xl transform rotate-90 md:rotate-0 flow-arrow">&rarr;</div>
+                <div class="flow-step rounded-lg p-3 text-center font-semibold w-full md:flex-1">4. Tabulation</div>
+                <div class="text-4xl transform rotate-90 md:rotate-0 flow-arrow">&rarr;</div>
+                <div class="flow-step rounded-lg p-3 text-center font-semibold w-full md:flex-1">5. Analysis</div>
+            </div>
+            
+            <!-- Tabs Interface -->
+            <div class="w-full max-w-5xl mx-auto">
+                <!-- Tab Buttons -->
+                <div class="border-b border-gray-300">
+                    <div class="tabs-container">
+                        <button class="tab-btn" data-tab="editing">4.1. Editing</button>
+                        <button class="tab-btn" data-tab="coding">4.2. Coding</button>
+                        <button class="tab-btn" data-tab="classification">4.3. Classification</button>
+                        <button class="tab-btn" data-tab="tabulation">4.4. Tabulation</button>
+                        <button class="tab-btn" data-tab="analysis">4.5. Analysis</button>
+                    </div>
+                </div>
+        
+                <!-- Tab Content Panels -->
+                <div class="mt-1">
+                    <div id="editing" class="tab-content section-card">
+                        <h3 class="text-xl">Editing: The First Line of Defense</h3>
+                        <p class="my-4">Editing involves meticulously checking collected raw data for errors, inconsistencies, omissions, and illegibility. This is a critical quality control gateway, ensuring accuracy and completeness before any further analysis. It includes field editing (on-site checks) and central editing (office-based, systematic review).</p>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li><strong>Purpose:</strong> Maximize data usefulness, ensure coherence, facilitate analysis.</li>
+                            <li><strong>Checks:</strong> Validity, range, logical consistency, outlier detection, data entry errors.</li>
+                        </ul>
+                    </div>
+                    <div id="coding" class="tab-content section-card hidden">
+                        <h3 class="text-xl">Coding: Structuring for Systematic Analysis</h3>
+                        <p class="my-4">Coding transforms raw data into a standardized, machine-readable format by assigning numerical or symbolic codes to responses. For qualitative data (e.g., interview transcripts), it involves categorizing themes and patterns to impose structure on unstructured information.</p>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li><strong>Purpose:</strong> Enable systematic analysis, identify themes, simplify data manipulation.</li>
+                            <li><strong>Approaches:</strong> Inductive (emergent themes), Deductive (pre-defined codes), Thematic analysis, Process coding, In Vivo coding.</li>
+                        </ul>
+                    </div>
+                    <div id="classification" class="tab-content section-card hidden">
+                        <h3 class="text-xl">Classification: Organizing for Efficiency & Security</h3>
+                        <p class="my-4">Data classification is the process of organizing data into relevant categories based on characteristics, security needs, and compliance requirements. This improves accessibility, streamlines research processes, and is crucial for applying appropriate data protection measures.</p>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li><strong>Purpose:</strong> Enhance accessibility, streamline research, strengthen security, ensure compliance, eliminate duplication.</li>
+                            <li><strong>Methods:</strong> Content-based (software inspects files), Context-based (software based on source/creator), User-based (manual tagging).</li>
+                        </ul>
+                    </div>
+                    <div id="tabulation" class="tab-content section-card hidden">
+                        <h3 class="text-xl">Tabulation: Presenting for Clarity & Analysis Readiness</h3>
+                        <p class="my-4">Tabulation involves systematically arranging classified data into rows and columns, typically in tables. It simplifies complex information, making it readable and easier to interpret and analyze. This stage is critical for preparing data for statistical analysis.</p>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li><strong>Purpose:</strong> Simplify data, facilitate comparison, enable statistical analysis, provide clear reference.</li>
+                            <li><strong>Components:</strong> Table number, title, column/row headings, body, units, footnotes, source note.</li>
+                        </ul>
+                    </div>
+                    <div id="analysis" class="tab-content section-card hidden">
+                        <h3 class="text-xl">Analysis: Deriving Insights from Data</h3>
+                        <p class="my-4">Analysis is the culminating stage where the processed data is examined to extract meaningful insights, test hypotheses, and answer research questions. This is where the data's story is uncovered using various statistical and analytical techniques. The choice of technique depends on the research objectives and the nature of the data.</p>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li><strong>Purpose:</strong> To interpret data, identify patterns and relationships, and generate actionable conclusions.</li>
+                            <li><strong>Common Techniques:</strong> Descriptive statistics (mean, median, mode), inferential statistics (t-tests, ANOVA, regression), data visualization, qualitative analysis, and machine learning models.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="quality" class="my-20">
+            <h2 class="text-3xl font-bold text-center mb-4">5. How Do We Ensure Data Quality? Best Practices for Integrity</h2>
+            <p class="text-center text-lg max-w-3xl mx-auto mb-10">The credibility of any research finding depends entirely on the quality of its data. Adhering to best practices is not optional—it's essential for producing trustworthy and defensible insights throughout the entire data lifecycle.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="section-card flex flex-col items-center text-center">
+                    <span class="text-5xl mb-4 icon-style">&#x1F4C4;</span>
+                    <h4 class="font-bold text-xl mb-2">Clear Data Governance</h4>
+                    <p>Establish clear policies, roles, and responsibilities for data management to ensure consistency, accountability, and compliance across the organization.</p>
+                </div>
+                 <div class="section-card flex flex-col items-center text-center">
+                    <span class="text-5xl mb-4 icon-style">&#x1F50D;</span>
+                    <h4 class="font-bold text-xl mb-2">Proactive Data Cleaning</h4>
+                    <p>Systematically identify and rectify inaccuracies, inconsistencies, and redundancies. Implement automated tools for efficiency and consistency in data cleansing processes.</p>
+                </div>
+                 <div class="section-card flex flex-col items-center text-center">
+                    <span class="text-5xl mb-4 icon-style">&#x2714;</span>
+                    <h4 class="font-bold text-xl mb-2">Robust Data Validation</h4>
+                    <p>Implement automated and manual checks to verify the correctness of data and its compliance with predefined rules *before* processing or storage, flagging anomalies in real-time.</p>
+                </div>
+                 <div class="section-card flex flex-col items-center text-center">
+                    <span class="text-5xl mb-4 icon-style">&#x1F4CA;</span>
+                    <h4 class="font-bold text-xl mb-2">Continuous Quality Assessments</h4>
+                    <p>Conduct regular, ongoing evaluations of datasets for accuracy, completeness, and timeliness using key metrics to identify areas for improvement and preempt reliability issues.</p>
+                </div>
+                 <div class="section-card flex flex-col items-center text-center">
+                    <span class="text-5xl mb-4 icon-style">&#x1F468;&#x200D;&#x1F3EB;</span>
+                    <h4 class="font-bold text-xl mb-2">Comprehensive Staff Training</h4>
+                    <p>Equip all personnel involved in data handling with the necessary skills and knowledge through training programs focusing on best practices for data management and integrity.</p>
+                </div>
+                 <div class="section-card flex flex-col items-center text-center">
+                    <span class="text-5xl mb-4 icon-style">&#x1F4DD;</span>
+                    <h4 class="font-bold text-xl mb-2">Standardized Collection Protocols</h4>
+                    <p>Use consistent and clear protocols for data entry and acquisition across all sources to minimize errors, ensure uniformity, and enhance the overall quality of raw data at its source.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#593D33] text-[#F5F5F5] text-center p-8 mt-12">
+        <p>Harnessing data effectively is the key to unlocking future opportunities and driving innovation.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Color palette to match the earthy/academic theme
+            const earthyTones = {
+                deepBrown: '#593D33',
+                mutedGreenGrey: '#A0A8A4',
+                lightBeige: '#D4C9C3',
+                darkGrey: '#333333',
+                mutedTerracotta: '#B47864',
+                oliveGreen: '#8A8C3C'
+            };
+
+            // Common font settings for charts
+            const chartFontSettings = {
+                font: {
+                    family: 'Inter',
+                    size: 12
+                },
+                color: earthyTones.darkGrey
+            };
+
+            // Tooltip configuration for consistent title display
+            const tooltipConfig = {
+                titleFont: { ...chartFontSettings.font, weight: 'bold' },
+                bodyFont: { ...chartFontSettings.font },
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        let label = item.chart.data.labels[item.dataIndex];
+                        return Array.isArray(label) ? label.join(' ') : label;
+                    }
+                }
+            };
+
+            // Function to wrap long labels for better chart display
+            function wrapLabel(label) {
+                const maxLength = 16;
+                if (label.length <= maxLength) return label;
+                const words = label.split(' ');
+                let currentLine = '';
+                const lines = [];
+                words.forEach(word => {
+                    if ((currentLine + ' ' + word).trim().length > maxLength) {
+                        lines.push(currentLine.trim());
+                        currentLine = word;
+                    } else {
+                        currentLine = (currentLine + ' ' + word).trim();
+                    }
+                });
+                if (currentLine) lines.push(currentLine.trim());
+                return lines;
+            }
+
+            // Chart for Collection Methods
+            const collectionMethodsChartEl = document.getElementById('collectionMethodsChart');
+            if (collectionMethodsChartEl) {
+                new Chart(collectionMethodsChartEl, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Surveys', 'Interviews', 'Focus Groups', 'Observation', 'Experiments', 'Archival Research'],
+                        datasets: [
+                            { label: 'Depth of Insight', data: [5, 9, 8, 6, 7, 4], backgroundColor: earthyTones.deepBrown },
+                            { label: 'Cost-Effectiveness', data: [8, 3, 4, 7, 2, 9], backgroundColor: earthyTones.mutedGreenGrey },
+                            { label: 'Speed', data: [9, 2, 3, 5, 4, 8], backgroundColor: earthyTones.lightBeige }
+                        ]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { stacked: false, grid: { display: false }, ticks: { display: false, ...chartFontSettings } },
+                            y: { stacked: false, grid: { display: false }, ticks: { ...chartFontSettings } }
+                        },
+                        plugins: {
+                            legend: { position: 'bottom', labels: chartFontSettings },
+                            title: {
+                                display: true,
+                                text: 'Comparing Data Collection Methods (Relative Score 1-10)',
+                                font: { family: 'Lora', size: 16 },
+                                color: earthyTones.deepBrown
+                            },
+                            tooltip: tooltipConfig
+                        }
+                    }
+                });
+            }
+            
+            // Chart for Sampling Techniques
+            const samplingTechniquesChartEl = document.getElementById('samplingTechniquesChart');
+            if (samplingTechniquesChartEl) {
+                const samplingLabels = ['Representative of Population', 'Risk of Bias', 'Resource Intensity (Cost/Time)'];
+                new Chart(samplingTechniquesChartEl, {
+                    type: 'bar',
+                    data: {
+                        labels: samplingLabels.map(wrapLabel),
+                        datasets: [
+                            { label: 'Probability Sampling', data: [9, 2, 8], backgroundColor: earthyTones.oliveGreen },
+                            { label: 'Non-Probability Sampling', data: [3, 8, 3], backgroundColor: earthyTones.mutedTerracotta }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: { beginAtZero: true, max: 10, ticks: { stepSize: 2, ...chartFontSettings } },
+                            x: { ticks: { ...chartFontSettings } }
+                        },
+                        plugins: {
+                            legend: { position: 'bottom', labels: chartFontSettings },
+                            title: {
+                                display: true,
+                                text: 'Sampling Techniques: Trade-offs (Score 1-10)',
+                                font: { family: 'Lora', size: 16 },
+                                color: earthyTones.deepBrown
+                            },
+                            tooltip: tooltipConfig
+                        }
+                    }
+                });
+            }
+
+            // Tab functionality for Processing Section
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            if (tabButtons.length > 0) {
+                // Set the first tab as active by default
+                tabButtons[0].classList.add('active-tab');
+                const initialTabId = tabButtons[0].dataset.tab;
+                document.getElementById(initialTabId).classList.remove('hidden');
+
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        // Deactivate all buttons and hide all content
+                        tabButtons.forEach(btn => btn.classList.remove('active-tab'));
+                        tabContents.forEach(content => content.classList.add('hidden'));
+                        
+                        // Activate the clicked button
+                        button.classList.add('active-tab');
+                        
+                        // Show the corresponding content
+                        const tabId = button.dataset.tab;
+                        const contentToShow = document.getElementById(tabId);
+                        if (contentToShow) {
+                            contentToShow.classList.remove('hidden');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

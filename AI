@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generative AI in Data Processing: A Prompt-Driven Approach</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: #F8F7F4; /* Off-white */
+            color: #4A4A4A; /* Dark Grey Text */
+            scroll-padding-top: 100px;
+        }
+        h1, h2, h3, h4, .font-lora {
+            font-family: 'Lora', serif;
+            color: #4A2E27; /* Deep Brown Headers */
+        }
+        .section-card {
+            background-color: #FFFFFF;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .prompt-block {
+            background-color: #EAE5E0; /* Lighter tan background */
+            border-left: 4px solid #A4846C; /* Muted Tan */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #4A2E27;
+        }
+        .prompt-block strong {
+            font-weight: bold;
+            color: #4A2E27;
+        }
+        .ai-output-block {
+            background-color: #f9fafb; /* gray-50 */
+            border-left: 4px solid #d1d5db; /* gray-300 */
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        /* NEW: Robust wrapping for code and JSON blocks */
+        .prompt-block pre, .prompt-block code,
+        .ai-output-block pre, .ai-output-block code {
+            white-space: pre-wrap;       /* CSS3 */
+            word-wrap: break-word;     /* IE */
+            overflow-wrap: break-word;   /* Standard */
+            word-break: break-all;     /* Force break for very long strings */
+        }
+        .divider {
+            border-top: 2px dashed #d1d5db; /* gray-300 */
+            margin: 2.5rem 0;
+        }
+        .presentation-nav a {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s;
+            font-weight: 600;
+        }
+        .presentation-nav a:hover {
+             background-color: #EAE5E0; /* Lighter tan */
+             color: #4A2E27;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white shadow-sm py-4">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold">AI-Powered Data Processing</h1>
+            <p class="text-lg text-gray-600 mt-1">An Elaborate Guide to Using Generative AI with Prompt Engineering and Domain Knowledge</p>
+        </div>
+    </header>
+    
+    <!-- Sticky Navigation for Sections -->
+    <nav class="sticky top-0 bg-white/95 backdrop-blur-sm shadow-md z-20">
+        <div class="container mx-auto px-4">
+            <div class="presentation-nav flex justify-center items-center flex-wrap space-x-2 md:space-x-4 py-3 text-sm md:text-base">
+                <a href="#introduction">Introduction</a>
+                <a href="#editing">Editing</a>
+                <a href="#coding">Coding</a>
+                <a href="#classification">Classification</a>
+                <a href="#multimodal">Multimodal AI</a>
+                <a href="#tabulation">Tabulation</a>
+                <a href="#conclusion">Conclusion</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8 md:py-12">
+
+        <section id="introduction" class="my-12">
+            <div class="section-card text-center">
+                <h2 class="text-3xl font-bold mb-4">The New Paradigm: Human-AI Collaboration</h2>
+                <p class="text-lg max-w-4xl mx-auto text-gray-700">Generative AI is transforming data processing from a purely manual or traditionally automated task into a dynamic, collaborative process. By combining the contextual understanding of Large Language Models (LLMs) with robust prompt engineering and deep domain expertise, researchers can achieve unprecedented efficiency and depth of insight.</p>
+                <p class="text-lg max-w-4xl mx-auto text-gray-700 mt-4">The core principle is not to replace the researcher, but to augment their abilities. The AI handles the scale and speed of processing, while the human provides the critical thinking, ethical oversight, and nuanced interpretation that models lack. This guide explores how to systematically and responsibly leverage AI for each stage of the data processing workflow.</p>
+            </div>
+        </section>
+
+        <section id="editing" class="my-16">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold text-center mb-6">AI-Augmented Data Editing</h2>
+                <p class="text-lg text-center max-w-3xl mx-auto mb-8 text-gray-700">Generative AI can act as a highly sophisticated assistant, identifying nuanced errors that traditional scripts might miss by understanding the *context* of the data, not just its structure. It excels at standardizing messy, unstructured text and flagging complex logical inconsistencies.</p>
+                
+                <h3 class="text-2xl font-bold mb-4 text-[#4A2E27]">Example 1: Comprehensive Record Validation</h3>
+                <div class="prompt-block">
+                    <p><strong>Role:</strong> Act as a meticulous clinical data analyst reviewing patient records.</p>
+                    <p><strong>Task:</strong> Analyze the following JSON data for potential errors. Check for validity, plausible ranges, and logical consistency. Identify any outliers.</p>
+                    <p><strong>Context:</strong> The data is from a study on adult sepsis patients in an ICU setting. Age should be over 18. Discharge date cannot be before admission date.</p>
+                    <p><strong>Format:</strong> Return a JSON object listing the `PatientID` for each record with an error, a description of the issue, and a suggested correction.</p>
+                    <p><strong>Data:</strong> <code>[{"PatientID": 101, "Age": 45, "AdmissionDate": "2024-06-20", "DischargeDate": "2024-06-18"}, {"PatientID": 102, "Age": 17, "BP_Systolic": 120}, {"PatientID": 103, "Age": 50, "BP_Systolic": 999}]</code></p>
+                </div>
+                <div class="ai-output-block"><pre><code>{
+  "errors": [
+    { "PatientID": 101, "issue": "Logical Consistency Error: DischargeDate is before AdmissionDate.", "suggestion": "Verify dates. Assuming typo, could be 2024-06-28." },
+    { "PatientID": 102, "issue": "Range Error: Patient age is 17, which is outside the adult study criteria (>18).", "suggestion": "Flag record for exclusion from adult study cohort." },
+    { "PatientID": 103, "issue": "Outlier/Typo: BP_Systolic of 999 is not a plausible physiological value.", "suggestion": "Verify data entry. Likely typo for 99." }
+  ]
+}</code></pre></div>
+
+                <div class="divider"></div>
+
+                <h3 class="text-2xl font-bold mb-4 text-[#4A2E27]">Example 2: Standardizing Unstructured Text Data</h3>
+                 <p class="text-base mb-4 text-gray-700">A common challenge is free-text data entry. An LLM can be prompted to clean and standardize this text, a task that is very difficult for traditional rule-based scripts.</p>
+                <div class="prompt-block">
+                    <p><strong>Role:</strong> You are a clinical data manager standardizing medication logs.</p>
+                    <p><strong>Task:</strong> Read the following list of medication entries. Standardize each entry to its proper generic name. If the dose is mentioned, extract it.</p>
+                    <p><strong>Context:</strong> Use common generic drug names. For example, "Tylenol" should be "Acetaminophen".</p>
+                    <p><strong>Format:</strong> Return a JSON list, where each object has "original_entry", "standardized_name", and "dose" keys.</p>
+                    <p><strong>Data:</strong> <code>["Patient took Tylenol 500mg", "Advil", "given Lasix 40 mg IV", "Metformin HCL"]</code></p>
+                </div>
+                <div class="ai-output-block"><pre><code>[
+  { "original_entry": "Patient took Tylenol 500mg", "standardized_name": "Acetaminophen", "dose": "500mg" },
+  { "original_entry": "Advil", "standardized_name": "Ibuprofen", "dose": null },
+  { "original_entry": "given Lasix 40 mg IV", "standardized_name": "Furosemide", "dose": "40mg" },
+  { "original_entry": "Metformin HCL", "standardized_name": "Metformin", "dose": null }
+]</code></pre></div>
+            </div>
+        </section>
+
+        <section id="coding" class="my-16">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold text-center mb-6">AI-Driven Thematic Coding</h2>
+                <p class="text-lg text-center max-w-3xl mx-auto mb-8 text-gray-700">This is where Gen AI shines. It can perform both inductive (bottom-up) and deductive (top-down) coding on vast amounts of unstructured text, identifying emergent themes or applying existing frameworks with high consistency.</p>
+
+                <h3 class="text-2xl font-bold mb-4 text-[#4A2E27]">Example 1: Inductive Coding (Discovering Themes)</h3>
+                <div class="prompt-block">
+                    <p><strong>Role:</strong> You are a qualitative researcher specializing in healthcare worker burnout.</p>
+                    <p><strong>Task:</strong> Read the following interview snippets. Identify and list the primary themes that emerge from the text. For each theme, provide a brief definition and a representative quote.</p>
+                    <p><strong>Context:</strong> The goal is to understand the main drivers of stress among nurses.</p>
+                    <p><strong>Format:</strong> Return a list of JSON objects, each with "theme", "definition", and "quote" keys.</p>
+                    <p><strong>Data:</strong> "The patient load is just impossible; I barely have time to chart, let alone connect with them... And the administration keeps adding more paperwork. It feels like we're not being heard. My colleagues and I are exhausted."</p>
+                </div>
+                 <div class="ai-output-block"><pre><code>[
+  { "theme": "High Workload & Time Pressure", "definition": "Refers to stress from an excessive number of patients and insufficient time.", "quote": "The patient load is just impossible..." },
+  { "theme": "Administrative Burden", "definition": "Frustration caused by increasing documentation requirements.", "quote": "...the administration keeps adding more paperwork." },
+  { "theme": "Lack of Support & Feeling Unheard", "definition": "A sense of disconnect from management to staff concerns.", "quote": "It feels like we're not being heard." }
+]</code></pre></div>
+                
+                <div class="divider"></div>
+
+                <h3 class="text-2xl font-bold mb-4 text-[#4A2E27]">Example 2: Deductive Coding (Applying a Framework)</h3>
+                <p class="text-base mb-4 text-gray-700">Here, the researcher provides a predefined set of codes and asks the AI to apply them to the text. This ensures consistency across a large dataset.</p>
+                <div class="prompt-block">
+                    <p><strong>Role:</strong> You are a research assistant coding user feedback according to a predefined framework.</p>
+                    <p><strong>Task:</strong> Analyze the user comment and assign one or more codes from the provided codebook.</p>
+                    <p><strong>Context:</strong> The feedback is for a new software application.</p>
+                    <p><strong>Codebook:</strong> `["UI/UX Issue", "Bug/Error", "Feature Request", "Positive Feedback"]`</p>
+                    <p><strong>Format:</strong> Return a JSON object with the "comment" and a list of "assigned_codes".</p>
+                    <p><strong>Data:</strong> "I love the new reporting feature! However, the app crashed when I tried to export the report to PDF, and the export button is a bit hard to find."</p>
+                </div>
+                <div class="ai-output-block"><pre><code>{
+  "comment": "I love the new reporting feature! However, the app crashed when I tried to export the report to PDF, and the export button is a bit hard to find.",
+  "assigned_codes": [
+    "Positive Feedback",
+    "Bug/Error",
+    "UI/UX Issue"
+  ]
+}</code></pre></div>
+            </div>
+        </section>
+        
+        <section id="classification" class="my-16">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold text-center mb-6">AI-Assisted Data Classification</h2>
+                <p class="text-lg text-center max-w-3xl mx-auto mb-8 text-gray-700">AI's ability to understand semantics allows for highly accurate, context-aware classification that goes beyond simple keyword matching, improving both security and analytical capability.</p>
+
+                <h3 class="text-2xl font-bold mb-4 text-[#4A2E27]">Prompting for Contextual Classification:</h3>
+                <div class="prompt-block">
+                    <p><strong>Role:</strong> You are a data governance expert responsible for classifying documents.</p>
+                    <p><strong>Task:</strong> Classify the following text based on its content.</p>
+                    <p><strong>Context:</strong> Use the following classification scheme: 'Clinical Note', 'Financial Record', 'Research Consent'.</p>
+                    <p><strong>Format:</strong> Return a single classification label.</p>
+                    <p><strong>Data:</strong> "Patient discussed the treatment plan and agreed to proceed. The total cost of the procedure was reviewed, and the patient confirmed their insurance coverage with policy number #12345. They will be scheduled for next Tuesday."</p>
+                </div>
+                <div class="ai-output-block"><pre><code>Financial Record</code></pre></div>
+                 <p class="text-sm text-gray-600 mt-4"><em>Note: A traditional keyword system might flag 'treatment plan' and classify this as 'Clinical Note'. The LLM understands that the primary context is financial, demonstrating superior accuracy.</em></p>
+            </div>
+        </section>
+
+        <section id="multimodal" class="my-16">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold text-center mb-6">Leveraging Multimodal AI in Data Processing</h2>
+                <p class="text-lg text-center max-w-3xl mx-auto mb-8 text-gray-700">Modern research involves more than just text. Multimodal AI models can process and interpret images, audio, and video, unlocking insights from data sources that were previously difficult to analyze systematically.</p>
+
+                <h3 class="text-2xl font-bold mb-4 text-[#4A2E27]">Example 1: Extracting Data from Chart Images</h3>
+                 <p class="text-base mb-4 text-gray-700">A common task is digitizing data from figures in papers or reports. Multimodal AI can "see" the chart and extract the data.</p>
+                <div class="prompt-block">
+                    <p><strong>Role:</strong> You are a data extraction specialist.</p>
+                    <p><strong>Task:</strong> Analyze the provided bar chart image. Extract the data and return it as a JSON object.</p>
+                    <p><strong>Context:</strong> The chart shows patient satisfaction scores for three different hospital wards.</p>
+                    <p><strong>Format:</strong> A JSON object where keys are the ward names and values are their satisfaction scores.</p>
+                    <p><strong>Data:</strong> <code>[Image of a bar chart showing 'Ward A' at 85%, 'Ward B' at 92%, and 'Ward C' at 78% satisfaction]</code></p>
+                </div>
+                <div class="ai-output-block"><pre><code>{
+  "Ward A": 85,
+  "Ward B": 92,
+  "Ward C": 78
+}</code></pre></div>
+                
+                <div class="divider"></div>
+
+                <h3 class="text-2xl font-bold mb-4 text-[#4A2E27]">Example 2: Analyzing Medical Imagery</h3>
+                <p class="text-base mb-4 text-gray-700">While not a replacement for a human expert like a radiologist, AI can perform initial screenings or quantify features from images for large-scale studies. <strong>This requires specialized, fine-tuned models and rigorous expert validation.</strong></p>
+                <div class="prompt-block">
+                    <p><strong>Role:</strong> You are a medical imaging AI assistant, fine-tuned on radiological data.</p>
+                    <p><strong>Task:</strong> Analyze the attached chest X-ray image and provide a preliminary report.</p>
+                    <p><strong>Context:</strong> Focus on identifying potential abnormalities like opacities, effusions, or nodules. Describe their location using anatomical quadrants.</p>
+                    <p><strong>Format:</strong> A JSON object with keys for "findings", "location_of_findings", and "assessment_confidence" (Low, Medium, High).</p>
+                    <p><strong>Data:</strong> <code>[Image of a chest X-ray]</code></p>
+                </div>
+                <div class="ai-output-block"><pre><code>{
+  "findings": "Possible evidence of scattered opacities consistent with inflammation or infection.",
+  "location_of_findings": "Right lower quadrant",
+  "assessment_confidence": "Medium"
+}
+// IMPORTANT: Output must be reviewed and confirmed by a qualified radiologist.</code></pre></div>
+
+                <div class="divider"></div>
+
+                <h3 class="text-2xl font-bold mb-4 text-[#4A2E27]">Example 3: Transcribing and Summarizing Audio</h3>
+                <p class="text-base mb-4 text-gray-700">AI can process audio files from patient interviews or meetings, providing not just a transcript but also a summary, list of action items, or thematic analysis.</p>
+                 <div class="prompt-block">
+                    <p><strong>Role:</strong> You are an AI meeting assistant.</p>
+                    <p><strong>Task:</strong> Transcribe the attached audio recording of a research project meeting. After the transcript, provide a bulleted list of key decisions made and action items assigned.</p>
+                    <p><strong>Format:</strong> A JSON object with a "transcript" key and an "summary" object containing "decisions" and "action_items" lists.</p>
+                    <p><strong>Data:</strong> <code>[Audio file of a 30-minute meeting]</code></p>
+                </div>
+                 <div class="ai-output-block"><pre><code>{
+  "transcript": "...",
+  "summary": {
+    "decisions": ["Proceed with patient recruitment for Phase 2.", "Submit ethics amendment by July 15th."],
+    "action_items": ["Anna to draft ethics amendment.", "Ben to finalize recruitment materials."]
+  }
+}</code></pre></div>
+            </div>
+        </section>
+
+        <section id="tabulation" class="my-16">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold text-center mb-6">AI in Tabulation & Summarization</h2>
+                <p class="text-lg text-center max-w-3xl mx-auto mb-8 text-gray-700">Generative AI can not only structure data into tables but also interpret and summarize the information, providing instant narrative insights from the structured data.</p>
+                
+                <h3 class="text-2xl font-bold mb-4 text-[#4A2E27]">Example 1: Extracting Structured Data from Text</h3>
+                 <p class="text-base mb-4 text-gray-700">LLMs are exceptionally good at converting unstructured paragraphs into structured, machine-readable formats like tables or JSON.</p>
+                <div class="prompt-block">
+                    <p><strong>Role:</strong> You are a data extraction tool.</p>
+                    <p><strong>Task:</strong> Extract the key information from the following paragraph and format it as a JSON object.</p>
+                    <p><strong>Data:</strong> "The study, ID NCT0451, enrolled 250 participants. The primary outcome was a reduction in systolic blood pressure, measured at 6 months. The lead investigator is Dr. Emily Carter from the University of Medicine."</p>
+                </div>
+                <div class="ai-output-block"><pre><code>{
+  "study_id": "NCT0451",
+  "participant_count": 250,
+  "primary_outcome": "Reduction in systolic blood pressure",
+  "measurement_timeframe": "6 months",
+  "lead_investigator": "Dr. Emily Carter",
+  "institution": "University of Medicine"
+}</code></pre></div>
+
+                <div class="divider"></div>
+
+                <h3 class="text-2xl font-bold mb-4 text-[#4A2E27]">Example 2: Generating Narrative from Tables</h3>
+                <div class="prompt-block">
+                    <p><strong>Role:</strong> You are a research analyst preparing a report summary.</p>
+                    <p><strong>Task:</strong> Based on the provided summary data table, write a brief, one-paragraph narrative that highlights the key findings.</p>
+                    <p><strong>Data:</strong> <code>[
+  {"Sepsis Severity": "Mild", "Avg_LOS_Days": 4.5, "Mortality_Rate": "8%"},
+  {"Sepsis Severity": "Moderate", "Avg_LOS_Days": 9.2, "Mortality_Rate": "22%"},
+  {"Sepsis Severity": "Severe", "Avg_LOS_Days": 21.8, "Mortality_Rate": "48%"}
+]</code></p>
+                </div>
+                <div class="ai-output-block"><p class="p-4">The analysis clearly indicates a strong correlation between sepsis severity and adverse patient outcomes. As severity increases from mild to severe, the average length of stay in the ICU rises dramatically from 4.5 to 21.8 days. Most critically, the mortality rate also shows a steep increase, escalating from 8% in mild cases to a significant 48% in patients with severe sepsis.</p></div>
+            </div>
+        </section>
+
+        <section id="conclusion" class="my-16">
+             <div class="section-card">
+                <h2 class="text-3xl font-bold text-center mb-6">Conclusion: The Power and the Prudence</h2>
+                <p class="text-lg text-center max-w-3xl mx-auto mb-8 text-gray-700">Generative AI, in both its textual and multimodal forms, offers a powerful toolkit for accelerating and deepening the data processing workflow. However, it is not a replacement for human expertise. The most effective use of this technology relies on a "human-in-the-loop" approach, where the researcher's domain knowledge guides the AI, and their critical judgment validates the output.</p>
+                <h3 class="text-2xl font-bold mb-4 text-center text-[#4A2E27]">Key Considerations for Responsible Use:</h3>
+                 <ul class="list-disc list-inside space-y-3 text-gray-600 max-w-2xl mx-auto">
+                    <li><strong>Managing Hallucinations:</strong> Always treat AI output as a draft or a hypothesis. Cross-validate critical information against source data or established facts.</li>
+                    <li><strong>Mitigating Bias:</strong> Be aware that LLMs can reflect biases present in their training data. Scrutinize outputs for fairness and representativeness, especially when dealing with demographic or social data.</li>
+                    <li><strong>Ensuring Data Privacy:</strong> Never input personally identifiable information (PII) or protected health information (PHI) into public AI models. Use private instances or on-premise models for sensitive data.</li>
+                    <li><strong>Maintaining Reproducibility:</strong> Document your prompts, the model version used, and any post-processing steps to ensure your AI-assisted analysis can be understood and replicated by others.</li>
+                 </ul>
+                 <p class="text-lg text-center max-w-3xl mx-auto mt-8 text-gray-700">When used prudently, AI becomes an indispensable partner in the quest for knowledge.</p>
+             </div>
+        </section>
+    </main>
+
+    <footer class="bg-[#4A2E27] text-white py-8 text-center">
+        <p>&copy; 2025 Data Processing in Research. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Data Processing Journey: From Raw to Refined Insight</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: #F8F7F4; /* Off-white */
+            color: #4A4A4A; /* Dark Grey Text */
+            scroll-padding-top: 100px; /* Offset for sticky nav */
+        }
+        h1, h2, h3, h4, .font-lora {
+            font-family: 'Lora', serif;
+            color: #4A2E27; /* Deep Brown Headers */
+        }
+        .section-card {
+            background-color: #FFFFFF;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .flow-step {
+            border: 2px solid #A4846C; /* Muted Tan */
+            background-color: #F8F7F4;
+            color: #4A2E27;
+            text-align: center;
+            font-weight: 600;
+        }
+        .flow-arrow {
+            color: #A4846C;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            margin: auto;
+            height: 300px;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .code-block {
+            background-color: #2D2D2D;
+            color: #F8F8F2;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            white-space: pre; 
+        }
+        .code-block code {
+            display: block;
+        }
+        .tab-btn {
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            color: #6b7280; /* gray-500 */
+            transition: all 0.2s;
+        }
+        .tab-btn:hover {
+            color: #4A2E27;
+        }
+        .tab-btn.active {
+            border-color: #4A2E27; /* Deep Brown */
+            color: #4A2E27;
+        }
+        .presentation-nav a {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s;
+            font-weight: 600;
+        }
+        .presentation-nav a:hover {
+             background-color: #EAE5E0; /* Lighter tan */
+             color: #4A2E27;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white shadow-sm py-4">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold">The Data Processing Journey</h1>
+            <p class="text-lg text-gray-600 mt-1">From Raw Information to Refined Insight</p>
+        </div>
+    </header>
+    
+    <!-- Sticky Navigation for Sections -->
+    <nav class="sticky top-0 bg-white/95 backdrop-blur-sm shadow-md z-20">
+        <div class="container mx-auto px-4">
+            <div class="presentation-nav flex justify-center items-center space-x-2 md:space-x-4 py-3 text-sm md:text-base">
+                <a href="#cycle">Cycle</a>
+                <a href="#editing">Editing</a>
+                <a href="#coding">Coding</a>
+                <a href="#classification">Classification</a>
+                <a href="#tabulation">Tabulation</a>
+                <a href="#quality">Quality</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <main class="container mx-auto px-4 py-8 md:py-12">
+
+        <section id="introduction" class="my-12 text-center">
+            <h2 class="text-3xl font-bold mb-4">Unlocking Value: The Core of Data Processing</h2>
+            <p class="text-lg max-w-4xl mx-auto text-gray-700">Data processing is the pivotal stage where raw, unorganized data collected from various sources is transformed into meaningful, usable information. This meticulous transformation is essential for deriving reliable insights, supporting evidence-based decision-making, and ensuring the scientific rigor of any research endeavor.</p>
+        </section>
+
+        <section id="cycle" class="my-16">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold text-center mb-8">The Data Processing Cycle</h2>
+                <p class="text-lg text-center max-w-3xl mx-auto mb-10 text-gray-600">Data processing is not a single event but a systematic, iterative cycle. Each stage refines the data, building towards its ultimate utility for analysis and interpretation.</p>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-4 text-center">
+                    <div class="flex flex-col items-center"><span class="text-3xl mb-2">📥</span><div class="p-3 rounded-lg flow-step w-36">1. Collection</div><p class="text-xs mt-1 text-gray-500 max-w-[120px] leading-tight">Acquiring raw data.</p></div>
+                    <div class="text-2xl flow-arrow transform rotate-90 md:rotate-0">&rarr;</div>
+                    <div class="flex flex-col items-center"><span class="text-3xl mb-2">🧹</span><div class="p-3 rounded-lg flow-step w-36">2. Preparation</div><p class="text-xs mt-1 text-gray-500 max-w-[120px] leading-tight">Cleaning, structuring.</p></div>
+                    <div class="text-2xl flow-arrow transform rotate-90 md:rotate-0">&rarr;</div>
+                    <div class="flex flex-col items-center"><span class="text-3xl mb-2">➡️</span><div class="p-3 rounded-lg flow-step w-36">3. Input</div><p class="text-xs mt-1 text-gray-500 max-w-[120px] leading-tight">Machine-readable format.</p></div>
+                    <div class="text-2xl flow-arrow transform rotate-90 md:rotate-0">&rarr;</div>
+                    <div class="flex flex-col items-center"><span class="text-3xl mb-2">⚙️</span><div class="p-3 rounded-lg flow-step w-36">4. Processing</div><p class="text-xs mt-1 text-gray-500 max-w-[120px] leading-tight">Transformation.</p></div>
+                    <div class="text-2xl flow-arrow transform rotate-90 md:rotate-0">&rarr;</div>
+                    <div class="flex flex-col items-center"><span class="text-3xl mb-2">📊</span><div class="p-3 rounded-lg flow-step w-36">5. Output</div><p class="text-xs mt-1 text-gray-500 max-w-[120px] leading-tight">Presenting formats.</p></div>
+                    <div class="text-2xl flow-arrow transform rotate-90 md:rotate-0">&rarr;</div>
+                    <div class="flex flex-col items-center"><span class="text-3xl mb-2">💾</span><div class="p-3 rounded-lg flow-step w-36">6. Storage</div><p class="text-xs mt-1 text-gray-500 max-w-[120px] leading-tight">Archiving for future use.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="editing" class="my-16">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold text-center mb-6">Editing: The First Line of Defense</h2>
+                <p class="text-lg text-center max-w-3xl mx-auto mb-8 text-gray-700">Data editing is the systematic process of identifying and correcting errors, inconsistencies, and omissions in raw data. This crucial step ensures the data's accuracy and integrity, preventing flawed conclusions.</p>
+                
+                <h3 class="text-2xl font-bold mb-4 text-[#4A2E27]">Key Editing Checks:</h3>
+                <ul class="list-disc list-inside space-y-3 text-gray-600 mb-6">
+                    <li><strong>Validity Check:</strong> Ensures data conforms to the required format and type (e.g., a "Date" field must contain a date, not text like "yesterday").</li>
+                    <li><strong>Range Check:</strong> Verifies that numerical data falls within a plausible, predefined range (e.g., a patient's age must be between 0 and 100).</li>
+                    <li><strong>Logical Consistency Check:</strong> Examines relationships between data points to see if they make sense together (e.g., a "Date of Discharge" cannot be before the "Date of Admission").</li>
+                    <li><strong>Outlier Detection:</strong> Identifies values that are drastically different from the majority, which may be errors or rare, significant events requiring verification.</li>
+                    <li><strong>Data Entry Error Check:</strong> Catches common human mistakes like typos ("Hypertenssion"), transposition errors (152 vs. 125), and formatting issues.</li>
+                </ul>
+
+                <h3 class="text-2xl font-bold mb-4 text-[#4A2E27]">Practical Examples:</h3>
+                <div class="tabs-container">
+                    <div class="border-b border-gray-200">
+                        <nav class="-mb-px flex flex-wrap" aria-label="Tabs">
+                            <button class="tab-btn active" data-target="#editing-code">Code Examples</button>
+                            <button class="tab-btn" data-target="#editing-nocode">No-Code / Manual Examples</button>
+                        </nav>
+                    </div>
+                    <div class="mt-4">
+                        <div id="editing-code" class="tab-content">
+                            <h4 class="font-bold text-lg mb-2">Quantitative Data Editing (Code)</h4>
+                            <p class="text-sm text-gray-600 mb-2">Using Python with Pandas for automated checks:</p>
+                            <div class="code-block"><code>import pandas as pd
+df = pd.DataFrame({'PatientID': [1, 2, 3, 4],
+                   'Age': [25, 120, 45, 18],
+                   'BP_Systolic': [120, 80, 150, 130]})
+# Range Check: Age should be between 0 and 100
+df['Age'] = df['Age'].apply(lambda x: x if 0 &lt;= x &lt;= 100 else pd.NA)
+# Logical Consistency: BP_Systolic should be reasonable
+df['BP_Systolic'] = df['BP_Systolic'].apply(lambda x: x if x &gt;= 70 else pd.NA)
+print(df)</code></div>
+                        </div>
+                        <div id="editing-nocode" class="tab-content hidden">
+                            <h4 class="font-bold text-lg mb-2">No-Code / Manual Editing</h4>
+                            <p class="text-sm text-gray-600 mb-2">Using spreadsheet software (Excel, Google Sheets):</p>
+                            <ul class="list-disc list-inside text-gray-600 text-sm space-y-1">
+                                <li><strong>Data Validation:</strong> Set rules (e.g., "Age" must be between 0-100).</li>
+                                <li><strong>Conditional Formatting:</strong> Highlight inconsistent values.</li>
+                                <li><strong>Remove Duplicates:</strong> Use built-in functions.</li>
+                                <li><strong>Find & Replace:</strong> Correct typos in bulk.</li>
+                                <li><strong>Manual Review:</strong> For qualitative data, check transcripts for omissions and anonymize sensitive information.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="coding" class="my-16">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold text-center mb-6">Coding: Structuring for Systematic Analysis</h2>
+                <p class="text-lg text-center max-w-3xl mx-auto mb-8 text-gray-700">Coding transforms raw data into a standardized format by assigning numerical or symbolic codes to responses. For qualitative data, it involves structuring unstructured information into discernible themes and patterns.</p>
+
+                <h3 class="text-2xl font-bold mb-4 text-[#4A2E27]">Purpose & Approaches:</h3>
+                <ul class="list-disc list-inside space-y-2 text-gray-600 mb-6">
+                    <li><strong>Systematic Analysis:</strong> Makes analysis rigorous and facilitates quick information retrieval.</li>
+                    <li><strong>Theme Identification:</strong> Helps discern what is present in data and identify emerging dimensions.</li>
+                    <li><strong>Quantification:</strong> Enables "counting" of qualitative data for visualizations.</li>
+                    <li><strong>Approaches:</strong> Inductive (data-driven), Deductive (framework-driven), and more.</li>
+                </ul>
+
+                <h3 class="text-2xl font-bold mb-4 text-[#4A2E27]">Practical Examples:</h3>
+                 <div class="tabs-container">
+                    <div class="border-b border-gray-200">
+                        <nav class="-mb-px flex flex-wrap" aria-label="Tabs">
+                            <button class="tab-btn active" data-target="#coding-code">Code Example</button>
+                            <button class="tab-btn" data-target="#coding-nocode">No-Code Example & Chart</button>
+                        </nav>
+                    </div>
+                    <div class="mt-4">
+                        <div id="coding-code" class="tab-content">
+                             <h4 class="font-bold text-lg mb-2">Qualitative Data Coding (Code)</h4>
+                            <p class="text-sm text-gray-600 mb-2">Extracting and counting themes from clinical notes with Python:</p>
+                            <div class="code-block"><code>import nltk
+from collections import Counter
+# Example clinical notes (simplified)
+notes = [
+    "Patient reports severe fatigue and joint pain.",
+    "New onset of muscle weakness; labs pending.",
+    "Fatigue significantly impacting daily activities."
+]
+# Define keywords for themes
+fatigue_keywords = ['fatigue', 'tiredness', 'exhaustion']
+pain_keywords = ['pain', 'ache', 'soreness']
+# Simple thematic coding
+themes = []
+for note in notes:
+    note_lower = note.lower()
+    if any(keyword in note_lower for keyword in fatigue_keywords):
+        themes.append('Fatigue_Symptom')
+    if any(keyword in note_lower for keyword in pain_keywords):
+        themes.append('Pain_Symptom')
+print("Identified Themes:", Counter(themes))</code></div>
+                        </div>
+                        <div id="coding-nocode" class="tab-content hidden">
+                            <h4 class="font-bold text-lg mb-2">Qualitative Data Coding (No-Code)</h4>
+                            <p class="text-sm text-gray-600 mb-2">Using specialized qualitative data analysis (QDA) software:</p>
+                            <ul class="list-disc list-inside text-gray-600 text-sm">
+                                <li><strong>NVivo / ATLAS.ti:</strong> Import transcripts, highlight text, and assign codes.</li>
+                                <li><strong>Dovetail:</strong> Tag insights from interviews to identify patterns.</li>
+                            </ul>
+                            <h4 class="font-bold text-lg mt-4 mb-2">Conceptual Chart: Frequency of Themes</h4>
+                            <p class="text-sm text-center text-gray-600">Visualizing the prevalence of key themes identified through coding.</p>
+                            <div class="chart-container"><canvas id="themeFrequencyChart"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="classification" class="my-16">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold text-center mb-6">Classification: Organizing for Efficiency & Security</h2>
+                <p class="text-lg text-center max-w-3xl mx-auto mb-8 text-gray-700">Data classification involves organizing data into relevant categories based on characteristics, security needs, and compliance requirements, which is crucial for accessibility and data security.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-[#4A2E27]">Purpose of Classification</h3>
+                        <ul class="list-disc list-inside space-y-3 text-gray-600 mb-6">
+                            <li><strong>Improved Accessibility:</strong> By tagging data (e.g., 'Financial', 'Clinical'), researchers can quickly filter large datasets to find exactly what they need, speeding up analysis.</li>
+                            <li><strong>Enhanced Security & Compliance:</strong> Assigning sensitivity levels (e.g., 'Public', 'Confidential') allows for automated security enforcement like encryption and access controls, which is essential for regulations like HIPAA or GDPR.</li>
+                            <li><strong>Streamlined Analysis:</strong> Grouping data into analytical categories (e.g., 'Treatment Group A', 'Control Group') allows for easier comparative studies and management of complex research workflows.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-[#4A2E27]">Methods of Classification</h3>
+                        <ul class="list-disc list-inside space-y-3 text-gray-600 mb-6">
+                            <li><strong>Content-based:</strong> An automated method where tools scan the content of a file for specific keywords or patterns (like a Social Security Number format) to identify sensitive information.</li>
+                            <li><strong>Context-based:</strong> Uses metadata about the data. For example, any data originating from the 'Finance' application is automatically classified as 'Financial Data', regardless of its content.</li>
+                            <li><strong>User-based:</strong> A manual process where a human expert applies a classification tag. While slower, it is often the most accurate as it leverages nuanced human understanding.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 class="text-2xl font-bold mt-6 mb-4 text-[#4A2E27]">Practical Examples:</h3>
+                 <div class="tabs-container">
+                    <div class="border-b border-gray-200">
+                        <nav class="-mb-px flex flex-wrap" aria-label="Tabs">
+                            <button class="tab-btn active" data-target="#classification-code">Code Example</button>
+                            <button class="tab-btn" data-target="#classification-nocode">No-Code Example</button>
+                        </nav>
+                    </div>
+                    <div class="mt-4">
+                        <div id="classification-code" class="tab-content">
+                            <h4 class="font-bold text-lg mb-2">Healthcare Data Classification (Code)</h4>
+                            <p class="text-sm text-gray-600 mb-2">Using Python to classify records based on sensitive attributes:</p>
+                            <div class="code-block"><code>def classify_patient_data(record):
+    if 'SSN' in record or 'MedicalRecordNumber' in record:
+        return 'Identifiable - Highly Sensitive'
+    elif 'ZipCode' in record and 'DateOfBirth' in record:
+        return 'Limited Data Set - Sensitive'
+    else:
+        return 'De-identified - Low Sensitivity'
+# Example usage:
+patient1 = {'SSN': '***', 'Diagnosis': 'Sepsis'}
+patient2 = {'ZipCode': '12345', 'DateOfBirth': '1980-01-01'}
+print(f"Patient 1: {classify_patient_data(patient1)}")
+print(f"Patient 2: {classify_patient_data(patient2)}")</code></div>
+                        </div>
+                        <div id="classification-nocode" class="tab-content hidden">
+                             <h4 class="font-bold text-lg mb-2">Healthcare Data Classification (No-Code)</h4>
+                            <p class="text-sm text-gray-600 mb-2">Using Data Loss Prevention (DLP) tools or cloud services:</p>
+                            <ul class="list-disc list-inside text-gray-600 text-sm">
+                                <li><strong>Microsoft Purview / Google Cloud DLP:</strong> Automatically scan and classify sensitive data (PHI, PII).</li>
+                                <li><strong>EHR Systems (Built-in):</strong> Classify data fields and apply role-based access controls.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tabulation" class="my-16">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold text-center mb-6">Tabulation: Presenting for Clarity</h2>
+                <p class="text-lg text-center max-w-3xl mx-auto mb-8 text-gray-700">Tabulation is the systematic arrangement of data into tables. It is the final processing step before analysis, designed to simplify complex information, facilitate comparisons, and prepare data for statistical calculations.</p>
+                
+                <h3 class="text-2xl font-bold mb-4 text-[#4A2E27]">Purpose of Tabulation:</h3>
+                <ul class="list-disc list-inside space-y-3 text-gray-600 mb-6">
+                    <li><strong>Simplify Complex Data:</strong> Tables transform raw, chaotic data into a structured format, making it easier to understand and interpret key information at a glance.</li>
+                    <li><strong>Facilitate Comparison:</strong> By arranging data in rows and columns, tables allow for the direct, side-by-side comparison of different variables or groups, highlighting trends and relationships.</li>
+                    <li><strong>Enable Statistical Analysis:</strong> A tabulated format is the foundation for further analysis. It simplifies the calculation of totals, averages, percentages, and other statistical measures.</li>
+                    <li><strong>Provide a Clear Reference:</strong> A well-labeled table with a clear title, headings, and source notes serves as a self-contained, easy-to-reference summary of findings within a report or presentation.</li>
+                </ul>
+
+                <h3 class="text-2xl font-bold mb-4 text-[#4A2E27]">Practical Examples:</h3>
+                <div class="tabs-container">
+                    <div class="border-b border-gray-200">
+                        <nav class="-mb-px flex flex-wrap" aria-label="Tabs">
+                            <button class="tab-btn active" data-target="#tabulation-code">Code Example</button>
+                            <button class="tab-btn" data-target="#tabulation-nocode">No-Code Example</button>
+                        </nav>
+                    </div>
+                    <div class="mt-4">
+                        <div id="tabulation-code" class="tab-content">
+                            <h4 class="font-bold text-lg mb-2">Tabulation for Research Outcomes (Code)</h4>
+                            <p class="text-sm text-gray-600 mb-2">Using Python with Pandas to create a summary table:</p>
+                            <div class="code-block"><code>import pandas as pd
+data = {
+    'Sepsis Severity': ['Mild', 'Moderate', 'Severe'],
+    'Avg_LOS_Days': [7.5, 14.2, 28.1],
+    'Mortality_Rate': ['5%', '15%', '45%']
+}
+df_summary = pd.DataFrame(data)
+# Print formatted markdown table (for example)
+print(df_summary.to_markdown(index=False))</code></div>
+                        </div>
+                        <div id="tabulation-nocode" class="tab-content hidden">
+                            <h4 class="font-bold text-lg mb-2">Tabulation for Research Outcomes (No-Code)</h4>
+                            <p class="text-sm text-gray-600 mb-2">Using spreadsheet software or business intelligence (BI) tools:</p>
+                            <ul class="list-disc list-inside text-gray-600 text-sm">
+                                <li><strong>Excel / Google Sheets:</strong> Use pivot tables to summarize data.</li>
+                                <li><strong>Tableau / Power BI:</strong> Drag and drop fields to create interactive tables.</li>
+                                <li><strong>SPSS / SAS:</strong> Use built-in functions for descriptive statistics tables.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <h4 class="font-bold text-lg mt-8 mb-4 text-[#4A2E27]">Example Tabular Presentation: Patient Outcomes by Sepsis Severity</h4>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
+                        <thead class="bg-[#F8F7F4] border-b border-gray-200">
+                            <tr>
+                                <th class="py-3 px-4 text-left font-semibold text-sm text-[#4A2E27]">Sepsis Severity</th>
+                                <th class="py-3 px-4 text-left font-semibold text-sm text-[#4A2E27]">Average ICU LOS (Days)</th>
+                                <th class="py-3 px-4 text-left font-semibold text-sm text-[#4A2E27]">Mortality Rate (%)</th>
+                                <th class="py-3 px-4 text-left font-semibold text-sm text-[#4A2E27]">Avg. Vasopressor Duration (hrs)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-gray-50"><td class="py-3 px-4 border-b border-gray-100 text-sm">Mild Sepsis</td><td class="py-3 px-4 border-b border-gray-100 text-sm">4.5</td><td class="py-3 px-4 border-b border-gray-100 text-sm">8%</td><td class="py-3 px-4 border-b border-gray-100 text-sm">0</td></tr>
+                            <tr class="hover:bg-gray-50"><td class="py-3 px-4 border-b border-gray-100 text-sm">Moderate Sepsis</td><td class="py-3 px-4 border-b border-gray-100 text-sm">9.2</td><td class="py-3 px-4 border-b border-gray-100 text-sm">22%</td><td class="py-3 px-4 border-b border-gray-100 text-sm">12</td></tr>
+                            <tr class="hover:bg-gray-50"><td class="py-3 px-4 text-sm">Severe Sepsis/Septic Shock</td><td class="py-3 px-4 text-sm">21.8</td><td class="py-3 px-4 text-sm">48%</td><td class="py-3 px-4 text-sm">72</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="quality" class="my-16 text-center">
+            <h2 class="text-3xl font-bold mb-4">Ensuring Data Quality: The Foundation of Research</h2>
+            <p class="text-lg max-w-4xl mx-auto text-gray-700">Robust data processing is inseparable from a commitment to data quality. Meticulous editing, precise coding, accurate classification, and clear tabulation all contribute to the integrity and reliability of your research findings.</p>
+            <p class="text-md max-w-4xl mx-auto mt-4 text-gray-600">By proactively addressing challenges like missing data, inconsistencies, and human error, researchers ensure their conclusions are scientifically sound and clinically actionable.</p>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#4A2E27] text-white py-8 text-center">
+        <p>&copy; 2025 Data Processing in Research. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- TAB LOGIC ---
+            const tabContainers = document.querySelectorAll('.tabs-container');
+            tabContainers.forEach(container => {
+                const tabButtons = container.querySelectorAll('.tab-btn');
+                const tabContents = container.querySelectorAll('.tab-content');
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        tabButtons.forEach(btn => btn.classList.remove('active'));
+                        tabContents.forEach(content => content.classList.add('hidden'));
+                        button.classList.add('active');
+                        const targetId = button.getAttribute('data-target');
+                        const targetContent = container.querySelector(targetId);
+                        if (targetContent) {
+                            targetContent.classList.remove('hidden');
+                        }
+                    });
+                });
+            });
+
+            // --- CHART.JS LOGIC ---
+            const chartColors = { accent: '#B5651D' };
+            function wrapLabel(label, maxLength = 16) {
+                if (label.length <= maxLength) return label;
+                const words = label.split(' ');
+                let currentLine = '';
+                const lines = [];
+                words.forEach(word => {
+                    if ((currentLine + ' ' + word).trim().length > maxLength) {
+                        lines.push(currentLine.trim());
+                        currentLine = word;
+                    } else {
+                        currentLine = (currentLine + ' ' + word).trim();
+                    }
+                });
+                if (currentLine) lines.push(currentLine.trim());
+                return lines;
+            }
+
+            const themeFrequencyCtx = document.getElementById('themeFrequencyChart');
+            if (themeFrequencyCtx) {
+                new Chart(themeFrequencyCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: [wrapLabel('Patient Safety Concerns'), 'Workflow Efficiency', wrapLabel('Communication Gaps'), 'Resource Allocation', wrapLabel('Staff Burnout')],
+                        datasets: [{
+                            label: 'Frequency in Qualitative Data',
+                            data: [150, 120, 90, 75, 60],
+                            backgroundColor: chartColors.accent,
+                            borderRadius: 5,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                        scales: { x: { beginAtZero: true, title: { display: true, text: 'Number of Mentions'}}},
+                        plugins: { legend: { display: false } }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
